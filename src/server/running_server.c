@@ -9,6 +9,8 @@
 
 int running_server(server_info_t *info)
 {
-    (void)info;
+    while (1) {
+        set_fd_set(info);
+    }
     return (EXIT_SUCCESS);
 }

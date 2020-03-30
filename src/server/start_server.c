@@ -16,7 +16,7 @@ int start_server(server_info_t *info)
     info->address.sin_family = AF_INET;
     info->address.sin_port = htons(info->port);
     if (inet_pton(AF_INET, SERVER_IP, &info->address.sin_addr) <= 0) {
-        perror("[Server] ip adress");
+        perror("[Server] ip address");
         return (EXIT_ERROR);
     }
     if (bind(info->server_socket, (struct sockaddr *)&info->address, sizeof
@@ -28,7 +28,7 @@ int start_server(server_info_t *info)
         perror("[Server] listening");
         return (EXIT_ERROR);
     }
-    fprintf(stdout, "Server is listing on %s:%i\n", SERVER_IP, ntohs
+    fprintf(stdout, "Server is listening on %s:%i\n", SERVER_IP, ntohs
     (info->address.sin_port));
     return (EXIT_SUCCESS);
 }

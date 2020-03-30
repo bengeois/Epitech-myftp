@@ -41,6 +41,9 @@ typedef struct server_info_s
     int port;
     char *anonymous_home;
     list_t connections;
+    fd_set read_fd;
+    fd_set write_fd;
+    fd_set except_fd;
 } server_info_t;
 
 /**************************************
@@ -62,6 +65,7 @@ int exit_properly(server_info_t *info, int error_code);
 
 /* FD */
 void close_fd(int *fd);
+void set_fd_set(server_info_t *info);
 
 
 /* SERVER */

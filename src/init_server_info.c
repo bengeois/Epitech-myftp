@@ -22,5 +22,8 @@ server_info_t *init_server_info(void)
     info->port = -1;
     info->anonymous_home = NULL;
     info->connections = NULL;
+    FD_ZERO(&info->read_fd);
+    FD_ZERO(&info->write_fd);
+    FD_ZERO(&info->except_fd);
     return (info);
 }
