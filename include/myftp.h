@@ -8,4 +8,7 @@
 #ifndef NWP_MYFTP_2019_MYFTP_H
 #define NWP_MYFTP_2019_MYFTP_H
 
+/* MAIN FUNCTION */
+int myftp(int argc, char **argv);
+
 #endif //NWP_MYFTP_2019_MYFTP_H

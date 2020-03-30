@@ -7,7 +7,9 @@
 
 #include "myftp.h"
 
-int main(int argc, char **argv)
+int myftp(int argc, char **argv)
 {
-    return (myftp(argc, argv));
+    (void)argc;
+    (void)argv;
+    return (0);
 }
