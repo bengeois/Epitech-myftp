@@ -5,9 +5,7 @@
 ** TODO: add description
 */
 
-#include <zconf.h>
 #include <stdio.h>
-#include <stdlib.h>
 #include "myftp.h"
 
 server_info_t *init_server_info(void)

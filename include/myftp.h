@@ -8,6 +8,8 @@
 #ifndef NWP_MYFTP_2019_MYFTP_H
 #define NWP_MYFTP_2019_MYFTP_H
 
+#include <stdlib.h>
+
 #define EXIT_ERROR 84
 
 typedef struct server_info_s
