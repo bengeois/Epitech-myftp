@@ -40,6 +40,7 @@ typedef struct server_info_s
     int server_socket;
     int port;
     char *anonymous_home;
+    list_t connections;
 } server_info_t;
 
 /**************************************
@@ -58,10 +59,13 @@ server_info_t *init_server_info(void);
 /* ERROR FUNCTION */
 int exit_properly(server_info_t *info, int error_code);
 
+
 /* FD */
 void close_fd(int *fd);
 
+
 /* SERVER */
 int start_server(server_info_t *info);
+int running_server(server_info_t *info);
 
 #endif //NWP_MYFTP_2019_MYFTP_H

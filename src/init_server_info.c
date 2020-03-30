@@ -21,5 +21,6 @@ server_info_t *init_server_info(void)
     info->server_socket = -1;
     info->port = -1;
     info->anonymous_home = NULL;
+    info->connections = NULL;
     return (info);
 }

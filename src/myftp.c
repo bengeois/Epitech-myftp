@@ -17,5 +17,8 @@ int myftp(int argc, char **argv)
     if (start_server(info) == EXIT_ERROR)
         return (exit_properly(info, EXIT_ERROR));
 
+    if (running_server(info) == EXIT_ERROR)
+        return (exit_properly(info, EXIT_ERROR));
+
     return (exit_properly(info, EXIT_SUCCESS));
 }

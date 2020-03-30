@@ -8,7 +8,7 @@
 #include "generic_list.h"
 
 node_t *list_get_first_node_with_value(list_t list, void *value,
-    value_comparator_t val_comp)
+value_comparator_t val_comp)
 {
     if (list_is_empty(list))
         return (NULL);

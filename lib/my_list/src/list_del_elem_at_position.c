@@ -7,7 +7,8 @@
 
 #include "generic_list.h"
 
-bool list_del_elem_at_position(list_t *front_ptr, unsigned int position, void (*del)(void* data))
+bool list_del_elem_at_position(list_t *front_ptr, unsigned int position, void
+(*del)(void* data))
 {
     node_t *to_delete = NULL;
     node_t *temp = NULL;
@@ -20,7 +21,7 @@ bool list_del_elem_at_position(list_t *front_ptr, unsigned int position, void (*
         return (list_del_elem_at_back(front_ptr, del));
 
     for (to_delete = *front_ptr; i != position; to_delete = to_delete->next,
-        i++) {
+    i++) {
         if (!to_delete) return (false);
         temp = to_delete;
     }

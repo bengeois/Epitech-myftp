@@ -44,7 +44,8 @@ bool list_delete_node(node_t *node, void (*del)(void* data));
 
 bool list_add_elem_at_front(list_t *front_ptr, void *elem);
 bool list_add_elem_at_back(list_t *front_ptr, void *elem);
-bool list_add_elem_at_position(list_t *front_ptr, void *elem, unsigned int position);
+bool list_add_elem_at_position(list_t *front_ptr, void *elem, unsigned int
+position);
 
 bool list_del_elem_at_front(list_t *front_ptr, void (*del)(void* data));
 bool list_del_elem_at_back(list_t *front_ptr, void (*del)(void* data));
@@ -64,6 +65,7 @@ void *list_get_elem_at_position(list_t list, unsigned int position);
 
 typedef int (*value_comparator_t)(void *first, void *second);
 
-node_t *list_get_first_node_with_value(list_t list, void *value, value_comparator_t val_comp);
+node_t *list_get_first_node_with_value(list_t list, void *value,
+value_comparator_t val_comp);
 
 #endif /* !GENERIC_LIST_H_ */
