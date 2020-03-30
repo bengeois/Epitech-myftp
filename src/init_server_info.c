@@ -6,6 +6,7 @@
 */
 
 #include <stdio.h>
+#include <string.h>
 #include "myftp.h"
 
 server_info_t *init_server_info(void)
@@ -16,6 +17,8 @@ server_info_t *init_server_info(void)
         fprintf(stderr, "malloc() failed\n");
         return (NULL);
     }
+    bzero(&info->address, sizeof(struct sockaddr_in));
+    info->server_socket = -1;
     info->port = -1;
     info->anonymous_home = NULL;
     return (info);

@@ -10,7 +10,12 @@
 int myftp(int argc, char **argv)
 {
     server_info_t *info = init_server_info();
+
     if (get_user_info(argc, argv, info) == EXIT_ERROR)
-        return (EXIT_ERROR);
-    return (EXIT_SUCCESS);
+        return (exit_properly(info, EXIT_ERROR));
+
+    //if (start_server(info) == EXIT_ERROR) {
+
+    //    }
+    return (exit_properly(info, EXIT_SUCCESS));
 }
