@@ -40,18 +40,19 @@ void list_dump(list_t list, value_displayer_t val_disp);
 /* Modification */
 
 node_t *list_create_node(void *elem);
-bool list_delete_node(node_t *node);
+bool list_delete_node(node_t *node, void (*del)(void* data));
 
 bool list_add_elem_at_front(list_t *front_ptr, void *elem);
 bool list_add_elem_at_back(list_t *front_ptr, void *elem);
 bool list_add_elem_at_position(list_t *front_ptr, void *elem, unsigned int position);
 
-bool list_del_elem_at_front(list_t *front_ptr);
-bool list_del_elem_at_back(list_t *front_ptr);
-bool list_del_elem_at_position(list_t *front_ptr, unsigned int position);
+bool list_del_elem_at_front(list_t *front_ptr, void (*del)(void* data));
+bool list_del_elem_at_back(list_t *front_ptr, void (*del)(void* data));
+bool list_del_elem_at_position(list_t *front_ptr, unsigned int position, void
+(*del)(void* data));
 bool list_del_node(list_t *front_ptr, node_t *node_ptr);
 
-void list_clear(list_t *front_ptr);
+void list_clear(list_t *front, void (*del)(void* data));
 
 /* Value Access */
 
