@@ -14,12 +14,15 @@
 
 #include <stdlib.h>
 #include <netinet/in.h>
+#include "my_network.h"
 
 /**************************************
  * DEFINE
  *************************************/
 
 #define EXIT_ERROR 84
+#define LISTEN_CLIENT_QUEUE 10
+#define SERVER_IP "127.0.0.1"
 
 /**************************************
  * STRUCTURE DEFINITION
@@ -51,5 +54,8 @@ int exit_properly(server_info_t *info, int error_code);
 
 /* FD */
 void close_fd(int *fd);
+
+/* SERVER */
+int start_server(server_info_t *info);
 
 #endif //NWP_MYFTP_2019_MYFTP_H

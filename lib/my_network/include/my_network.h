@@ -8,6 +8,6 @@
 #ifndef MY_NETWORK_H
 #define MY_NETWORK_H
 
-
+int create_socket(void);
 
 #endif

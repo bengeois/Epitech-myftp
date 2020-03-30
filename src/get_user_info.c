@@ -16,9 +16,9 @@ int arg_error(int argc, char **argv)
     if (argc == 2 && strcmp(argv[1], "-help") == 0) {
         fprintf(stdout, "USAGE: %s port path\n", argv[0]);
         fprintf(stdout, "\tport  is the port number on which the server "
-                        "socket listens\n");
+        "socket listens\n");
         fprintf(stdout, "\tpath  is the path to the home directory for the "
-                        "Anonymous user\n");
+        "Anonymous user\n");
         return (EXIT_ERROR);
     }
     if (argc != 3) {
