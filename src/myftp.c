@@ -9,7 +9,8 @@
 
 int myftp(int argc, char **argv)
 {
-    (void)argc;
-    (void)argv;
+    server_info_t *info = init_server_info();
+    if (get_user_info(argc, argv, info) == EXIT_ERROR)
+        return (EXIT_ERROR);
     return (0);
 }
