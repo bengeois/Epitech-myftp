@@ -15,6 +15,7 @@
 #include <stdlib.h>
 #include <netinet/in.h>
 #include "my_network.h"
+#include "generic_list.h"
 
 /**************************************
  * DEFINE
@@ -27,6 +28,11 @@
 /**************************************
  * STRUCTURE DEFINITION
  *************************************/
+
+typedef struct connection_s
+{
+    int socket;
+} connection_t;
 
 typedef struct server_info_s
 {
