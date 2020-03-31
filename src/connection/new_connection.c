@@ -14,5 +14,7 @@ connection_t *new_connection(void)
     if (!new_client)
         return (NULL);
     new_client->socket = -1;
+    new_client->received = NULL;
+    new_client->sending = NULL;
     return (new_client);
 }

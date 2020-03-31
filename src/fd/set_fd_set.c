@@ -22,8 +22,8 @@ void set_fd_set(server_info_t *info)
             continue;
         if (((connection_t*)temp->value)->socket > info->sock_max)
             info->sock_max = ((connection_t*)temp->value)->socket;
-        //if (1)// A Voir la condition pour write)
-        //    FD_SET(((connection_t*)temp->value)->socket, &info->write_fd);
+        if (((connection_t*)temp->value)->sending != NULL)
+            FD_SET(((connection_t*)temp->value)->socket, &info->write_fd);
         FD_SET(((connection_t*)temp->value)->socket, &info->read_fd);
         FD_SET(((connection_t*)temp->value)->socket, &info->except_fd);
     }

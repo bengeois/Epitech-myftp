@@ -16,7 +16,7 @@ int get_new_client_info(server_info_t *info, connection_t *new_client)
     bzero(&new_client_addr, sizeof(struct sockaddr_in));
     new_client_addr_len = sizeof(new_client_addr);
     if ((new_client->socket = accept(info->server_socket, (struct sockaddr *)
-        &new_client_addr, (socklen_t *) &new_client_addr_len)) < 0) {
+    &new_client_addr, (socklen_t *) &new_client_addr_len)) < 0) {
         perror("[SERVER] accept");
         return (EXIT_SUCCESS);
     }

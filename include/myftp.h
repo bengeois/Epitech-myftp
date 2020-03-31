@@ -27,6 +27,8 @@
 #define EXIT_ERROR 84
 #define LISTEN_CLIENT_QUEUE 10
 #define SERVER_IP "127.0.0.1"
+#define READ_SIZE 256
+#define WRITE_SIZE 256
 
 /**************************************
  * STRUCTURE DEFINITION
@@ -36,6 +38,8 @@ typedef struct connection_s
 {
     int socket;
     struct sockaddr_in addr;
+    char *received;
+    list_t *sending;
 } connection_t;
 
 typedef struct server_info_s
@@ -78,6 +82,7 @@ int socket_error(server_info_t *info);
 /* CONNECTION */
 connection_t *new_connection(void);
 void delete_connection(void *data);
+void delete_sending(void *data);
 
 /* SERVER */
 int start_server(server_info_t *info);
@@ -85,5 +90,6 @@ int running_server(server_info_t *info);
 int get_new_client_info(server_info_t *info, connection_t *new_client);
 int is_new_client(server_info_t *info);
 void manage_timeout_select(server_info_t *info);
+int handle_socket_activities(server_info_t *info);
 
 #endif //NWP_MYFTP_2019_MYFTP_H

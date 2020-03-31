@@ -51,7 +51,8 @@ bool list_del_elem_at_front(list_t *front_ptr, void (*del)(void* data));
 bool list_del_elem_at_back(list_t *front_ptr, void (*del)(void* data));
 bool list_del_elem_at_position(list_t *front_ptr, unsigned int position, void
 (*del)(void* data));
-bool list_del_node(list_t *front_ptr, node_t *node_ptr);
+bool list_del_elem_at_value(list_t *front_ptr, void *value, void
+(*del)(void* data));
 
 void list_clear(list_t *front, void (*del)(void* data));
 
