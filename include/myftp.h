@@ -13,6 +13,9 @@
  *************************************/
 
 #include <stdlib.h>
+#include <string.h>
+#include <unistd.h>
+#include <stdio.h>
 #include <netinet/in.h>
 #include "my_network.h"
 #include "generic_list.h"
@@ -32,6 +35,7 @@
 typedef struct connection_s
 {
     int socket;
+    struct sockaddr_in addr;
 } connection_t;
 
 typedef struct server_info_s
@@ -44,6 +48,8 @@ typedef struct server_info_s
     fd_set read_fd;
     fd_set write_fd;
     fd_set except_fd;
+    int sock_max;
+    struct timeval timeout;
 } server_info_t;
 
 /**************************************
@@ -66,10 +72,18 @@ int exit_properly(server_info_t *info, int error_code);
 /* FD */
 void close_fd(int *fd);
 void set_fd_set(server_info_t *info);
+int socket_error(server_info_t *info);
 
+
+/* CONNECTION */
+connection_t *new_connection(void);
+void delete_connection(void *data);
 
 /* SERVER */
 int start_server(server_info_t *info);
 int running_server(server_info_t *info);
+int get_new_client_info(server_info_t *info, connection_t *new_client);
+int is_new_client(server_info_t *info);
+void manage_timeout_select(server_info_t *info);
 
 #endif //NWP_MYFTP_2019_MYFTP_H

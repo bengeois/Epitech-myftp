@@ -25,5 +25,8 @@ server_info_t *init_server_info(void)
     FD_ZERO(&info->read_fd);
     FD_ZERO(&info->write_fd);
     FD_ZERO(&info->except_fd);
+    info->sock_max = -1;
+    bzero(&info->timeout, sizeof(struct timeval));
+    info->timeout.tv_sec = 2; // A FAIRE
     return (info);
 }

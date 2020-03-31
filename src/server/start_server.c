@@ -5,7 +5,6 @@
 ** TODO: add description
 */
 
-#include <stdio.h>
 #include <arpa/inet.h>
 #include "myftp.h"
 
