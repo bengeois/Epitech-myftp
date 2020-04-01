@@ -7,7 +7,8 @@
 
 #include "myftp.h"
 
-void manage_timeout_select(server_info_t *info)
+void manage_timeout_select(struct timeval *timeout)
 {
-    info->timeout.tv_sec = 2;
+    timeout->tv_sec = 2;
+    timeout->tv_usec = 0;
 }

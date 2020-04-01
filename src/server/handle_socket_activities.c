@@ -6,28 +6,42 @@
 */
 
 #include <arpa/inet.h>
+#include "getnextline.h"
 #include "myftp.h"
 
-void client_error(server_info_t *info, node_t **temp)
+int read_activity(server_info_t *info, node_t **temp)
 {
-    node_t *to_delete = *temp;
-    *temp = (*temp)->next;
-    fprintf(stderr, "Client exception : %s:%i closed\n",
-    inet_ntoa(((connection_t*)to_delete->value)->addr.sin_addr),
-    ntohs(((connection_t*)to_delete->value)->addr.sin_port));
-    close(((connection_t*)to_delete->value)->socket);
-    list_del_elem_at_value(&info->connections, to_delete->value,
-    delete_connection);
+    ((client_t*)(*temp)->value)->received = get_next_line(((client_t*)(*temp)
+        ->value)->socket);
+    if (((client_t*)(*temp)->value)->received == NULL) {
+        disconnect_client(info, temp, "Client disconnected");
+        return (LOOP_CONTINUE);
+    }
+    return (EXIT_SUCCESS);
+}
+
+int io_activities(server_info_t *info, node_t **temp)
+{
+    if (FD_ISSET(((client_t*)(*temp)->value)->socket, &info->except_fd)) {
+        disconnect_client(info, temp, "Client Exception");
+        return (LOOP_CONTINUE);
+    }
+    if (FD_ISSET(((client_t*)(*temp)->value)->socket, &info->write_fd)) {
+        //write_activity(info, temp);
+    }
+    if (FD_ISSET(((client_t*)(*temp)->value)->socket, &info->read_fd)) {
+        if (read_activity(info, temp) == LOOP_CONTINUE)
+            return (LOOP_CONTINUE);
+    }
+    return (EXIT_SUCCESS);
 }
 
 int handle_socket_activities(server_info_t *info)
 {
-    node_t *temp = info->connections;
+    node_t *temp = info->clients;
     while (temp) {
-        if (FD_ISSET(((connection_t*)temp->value)->socket, &info->except_fd)) {
-            client_error(info, &temp);
+        if (io_activities(info, &temp) == LOOP_CONTINUE)
             continue;
-        }
         temp = temp->next;
     }
     return (EXIT_SUCCESS);

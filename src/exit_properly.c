@@ -18,7 +18,7 @@ int exit_properly(server_info_t *info, int error_code)
         return (error_code);
     if (fcntl(info->server_socket, F_GETFD) != -1 || errno != EBADF)
         close(info->server_socket);
-    list_clear(&info->connections, &delete_connection);
+    list_clear(&info->clients, &delete_client);
     free(info);
     fprintf(stdout, "Server shut down\n");
     return (error_code);

@@ -8,7 +8,7 @@
 #include <arpa/inet.h>
 #include "myftp.h"
 
-int get_new_client_info(server_info_t *info, connection_t *new_client)
+int get_new_client_info(server_info_t *info, client_t *new_client)
 {
     struct sockaddr_in new_client_addr;
     int new_client_addr_len;
@@ -26,24 +26,24 @@ int get_new_client_info(server_info_t *info, connection_t *new_client)
 
 int is_new_client(server_info_t *info)
 {
-    connection_t *new_client = NULL;
+    client_t *new = NULL;
 
     if (!FD_ISSET(info->server_socket, &info->read_fd))
         return (EXIT_SUCCESS);
-    if ((new_client = new_connection()) == NULL) {
-        fprintf(stderr, "[SERVER] Connection error.\n");
+    if ((new = new_client()) == NULL) {
+        fprintf(stderr, "[SERVER] Client error.\n");
         return (EXIT_SUCCESS);
     }
-    if (get_new_client_info(info, new_client) == EXIT_FAILURE) {
-        free(new_client);
+    if (get_new_client_info(info, new) == EXIT_FAILURE) {
+        free(new);
         return (EXIT_SUCCESS);
     }
-    if (!list_add_elem_at_back(&info->connections, new_client)) {
-        free(new_client);
-        fprintf(stderr, "[SERVER] Connection error.\n");
+    if (!list_add_elem_at_back(&info->clients, new)) {
+        free(new);
+        fprintf(stderr, "[SERVER] Client error.\n");
         return (EXIT_SUCCESS);
     }
-    fprintf(stdout, "Connection from %s:%i\n", inet_ntoa(new_client->addr
-    .sin_addr), ntohs(new_client->addr.sin_port));
+    fprintf(stdout, "Client from %s:%i\n", inet_ntoa(new->addr
+    .sin_addr), ntohs(new->addr.sin_port));
     return (EXIT_SUCCESS);
 }

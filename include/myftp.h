@@ -25,22 +25,37 @@
  *************************************/
 
 #define EXIT_ERROR 84
+#define LOOP_CONTINUE -1
+
 #define LISTEN_CLIENT_QUEUE 10
 #define SERVER_IP "127.0.0.1"
-#define READ_SIZE 256
+#define READ 256
 #define WRITE_SIZE 256
+
+/**************************************
+ * ENUM DEFINITION
+ *************************************/
+
+typedef enum transfer_mode_s
+{
+    PASSIVE,
+    ACTIVE
+} transfer_mode_t;
 
 /**************************************
  * STRUCTURE DEFINITION
  *************************************/
 
-typedef struct connection_s
+typedef struct client_s
 {
     int socket;
     struct sockaddr_in addr;
+    char *username;
+    char *password;
+    transfer_mode_t mode;
     char *received;
     list_t *sending;
-} connection_t;
+} client_t;
 
 typedef struct server_info_s
 {
@@ -48,13 +63,18 @@ typedef struct server_info_s
     int server_socket;
     int port;
     char *anonymous_home;
-    list_t connections;
+    list_t clients;
     fd_set read_fd;
     fd_set write_fd;
     fd_set except_fd;
-    int sock_max;
     struct timeval timeout;
 } server_info_t;
+
+typedef struct commands_s
+{
+    char *name;
+    void (*func)(server_info_t*);
+} command_t;
 
 /**************************************
  * FUNCTION PREDECLARATION
@@ -79,17 +99,18 @@ void set_fd_set(server_info_t *info);
 int socket_error(server_info_t *info);
 
 
-/* CONNECTION */
-connection_t *new_connection(void);
-void delete_connection(void *data);
+/* CLIENT */
+client_t *new_client(void);
+void delete_client(void *data);
 void delete_sending(void *data);
+void disconnect_client(server_info_t *info, node_t **temp, char *message);
+int get_new_client_info(server_info_t *info, client_t *new_client);
+int is_new_client(server_info_t *info);
 
 /* SERVER */
 int start_server(server_info_t *info);
 int running_server(server_info_t *info);
-int get_new_client_info(server_info_t *info, connection_t *new_client);
-int is_new_client(server_info_t *info);
-void manage_timeout_select(server_info_t *info);
+void manage_timeout_select(struct timeval *timeout);
 int handle_socket_activities(server_info_t *info);
 
 #endif //NWP_MYFTP_2019_MYFTP_H

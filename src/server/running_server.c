@@ -9,11 +9,13 @@
 
 int running_server(server_info_t *info)
 {
-    while (1) {
+    struct timeval timeout;
+    int i = 0;
+    while (i < 12) {
         set_fd_set(info);
-        manage_timeout_select(info);
+        manage_timeout_select(&timeout);
         if (select(FD_SETSIZE, &info->read_fd, &info->write_fd,
-        &info->except_fd, &info->timeout) == -1) {
+        &info->except_fd, &timeout) == -1) {
             perror("[SERVER]");
             return (EXIT_FAILURE);
         }
@@ -23,6 +25,7 @@ int running_server(server_info_t *info)
             return (EXIT_FAILURE);
         if (handle_socket_activities(info) == EXIT_FAILURE)
             return (EXIT_FAILURE);
+        i++;
     }
     return (EXIT_SUCCESS);
 }

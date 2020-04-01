@@ -7,9 +7,9 @@
 
 #include "myftp.h"
 
-connection_t *new_connection(void)
+client_t *new_client(void)
 {
-    connection_t *new_client = malloc(sizeof(connection_t));
+    client_t *new_client = malloc(sizeof(client_t));
 
     if (!new_client)
         return (NULL);

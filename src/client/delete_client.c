@@ -14,11 +14,11 @@ void delete_sending(void *data)
     free(data);
 }
 
-void delete_connection(void *data)
+void delete_client(void *data)
 {
     if (!data)
         return;
-    connection_t *real_data = (connection_t*)data;
+    client_t *real_data = (client_t*)data;
     if (real_data->received)
         free(real_data->received);
     if (real_data->sending)
