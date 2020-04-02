@@ -10,7 +10,7 @@
 int running_server(server_info_t *info)
 {
     struct timeval timeout;
-    while (true) {
+    while (!server_stop) {
         set_fd_set(info);
         manage_timeout_select(&timeout);
         if (select(FD_SETSIZE, &info->read_fd, &info->write_fd,
@@ -18,11 +18,11 @@ int running_server(server_info_t *info)
             perror("[SERVER]");
             return (EXIT_FAILURE);
         }
-        if (socket_error(info) == EXIT_FAILURE)
+        if (socket_error(info) == TCP_ERROR)
             return (EXIT_FAILURE);
-        if (is_new_client(info) == EXIT_FAILURE)
+        if (is_new_client(info) == TCP_ERROR)
             return (EXIT_FAILURE);
-        if (handle_socket_activities(info) == EXIT_FAILURE)
+        if (handle_socket_activities(info) == TCP_ERROR)
             return (EXIT_FAILURE);
     }
     return (EXIT_SUCCESS);

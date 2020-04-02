@@ -31,6 +31,8 @@
 #define LISTEN_CLIENT_QUEUE 10
 #define SERVER_IP "127.0.0.1"
 
+bool server_stop;
+
 /**************************************
  * ENUM DEFINITION
  *************************************/
@@ -109,6 +111,7 @@ void add_message_client(client_t *client, char *str, ...);
 
 /* SERVER */
 int start_server(server_info_t *info);
+void stop_server(int signal);
 int running_server(server_info_t *info);
 void manage_timeout_select(struct timeval *timeout);
 int handle_socket_activities(server_info_t *info);

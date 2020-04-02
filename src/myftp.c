@@ -5,12 +5,15 @@
 ** TODO: add description
 */
 
+#include <signal.h>
 #include "myftp.h"
 
 int myftp(int argc, char **argv)
 {
     server_info_t *info = init_server_info();
 
+    signal(SIGINT, &stop_server);
+    server_stop = false;
     if (get_user_info(argc, argv, info) == EXIT_ERROR)
         return (exit_properly(info, EXIT_ERROR));
 

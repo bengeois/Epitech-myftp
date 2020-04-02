@@ -10,7 +10,7 @@
 
 int start_server(server_info_t *info)
 {
-    if ((info->server_socket = create_socket()) == -1)
+    if ((info->server_socket = create_socket()) == TCP_ERROR)
         return (EXIT_ERROR);
     info->address.sin_family = AF_INET;
     info->address.sin_port = htons(info->port);
