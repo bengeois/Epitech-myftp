@@ -22,6 +22,6 @@ void delete_client(void *data)
     if (real_data->received)
         free(real_data->received);
     if (real_data->sending)
-        list_clear(real_data->sending, delete_sending);
+        free(real_data->sending);
     free(real_data);
 }

@@ -1,0 +1,15 @@
+/*
+** EPITECH PROJECT, 2020
+** NWP_myftp_2019
+** File description:
+** TODO: add description
+*/
+
+#include "my_network.h"
+
+bool tcp_is_waiting_message(message_t *message)
+{
+    if (message->buff[message->sending_pos] == 0)
+        return (false);
+    return (true);
+}

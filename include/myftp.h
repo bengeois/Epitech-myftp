@@ -19,6 +19,7 @@
 #include <netinet/in.h>
 #include "my_network.h"
 #include "generic_list.h"
+#include "error_code.h"
 
 /**************************************
  * DEFINE
@@ -29,8 +30,6 @@
 
 #define LISTEN_CLIENT_QUEUE 10
 #define SERVER_IP "127.0.0.1"
-#define READ 256
-#define WRITE_SIZE 256
 
 /**************************************
  * ENUM DEFINITION
@@ -54,7 +53,7 @@ typedef struct client_s
     char *password;
     transfer_mode_t mode;
     char *received;
-    list_t *sending;
+    message_t *sending;
 } client_t;
 
 typedef struct server_info_s
@@ -106,6 +105,7 @@ void delete_sending(void *data);
 void disconnect_client(server_info_t *info, node_t **temp, char *message);
 int get_new_client_info(server_info_t *info, client_t *new_client);
 int is_new_client(server_info_t *info);
+void add_message_client(client_t *client, char *str, ...);
 
 /* SERVER */
 int start_server(server_info_t *info);

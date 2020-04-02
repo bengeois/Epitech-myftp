@@ -10,8 +10,7 @@
 int running_server(server_info_t *info)
 {
     struct timeval timeout;
-    int i = 0;
-    while (i < 12) {
+    while (true) {
         set_fd_set(info);
         manage_timeout_select(&timeout);
         if (select(FD_SETSIZE, &info->read_fd, &info->write_fd,
@@ -25,7 +24,6 @@ int running_server(server_info_t *info)
             return (EXIT_FAILURE);
         if (handle_socket_activities(info) == EXIT_FAILURE)
             return (EXIT_FAILURE);
-        i++;
     }
     return (EXIT_SUCCESS);
 }

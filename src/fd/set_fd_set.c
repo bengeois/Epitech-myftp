@@ -19,7 +19,7 @@ void set_fd_set(server_info_t *info)
     for (node_t *temp = info->clients; temp; temp = temp->next) {
         if (((client_t*)temp->value)->socket == -1)
             continue;
-        if (((client_t*)temp->value)->sending != NULL)
+        if (tcp_is_waiting_message(((client_t*)temp->value)->sending))
             FD_SET(((client_t*)temp->value)->socket, &info->write_fd);
         FD_SET(((client_t*)temp->value)->socket, &info->read_fd);
         FD_SET(((client_t*)temp->value)->socket, &info->except_fd);
