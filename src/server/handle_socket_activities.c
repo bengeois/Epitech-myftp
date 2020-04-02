@@ -54,5 +54,5 @@ int handle_socket_activities(server_info_t *info)
             continue;
         temp = temp->next;
     }
-    return (EXIT_SUCCESS);
+    return (TCP_OK);
 }

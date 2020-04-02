@@ -24,6 +24,9 @@ int running_server(server_info_t *info)
             return (EXIT_FAILURE);
         if (handle_socket_activities(info) == TCP_ERROR)
             return (EXIT_FAILURE);
+        if (handle_client_activities(info) == TCP_ERROR)
+            return (EXIT_FAILURE);
+        quit_client(info);
     }
     return (EXIT_SUCCESS);
 }

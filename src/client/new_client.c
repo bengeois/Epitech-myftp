@@ -20,5 +20,6 @@ client_t *new_client(void)
         free(new_client);
         return (NULL);
     }
+    new_client->quit = false;
     return (new_client);
 }

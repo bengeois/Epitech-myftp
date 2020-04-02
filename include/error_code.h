@@ -22,5 +22,6 @@
 #define E_257 "257 "%s" created.\n"
 #define E_331 "331 User name okay, need password.\n"
 #define E_332 "332 Need account for login.\n"
+#define E_500 "500 Unknown command.\n"
 
 #endif //NWP_MYFTP_2019_ERROR_CODE_H

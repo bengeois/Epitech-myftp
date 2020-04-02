@@ -56,6 +56,7 @@ typedef struct client_s
     transfer_mode_t mode;
     char *received;
     message_t *sending;
+    bool quit;
 } client_t;
 
 typedef struct server_info_s
@@ -74,12 +75,17 @@ typedef struct server_info_s
 typedef struct commands_s
 {
     char *name;
-    void (*func)(server_info_t*);
+    void (*func)(server_info_t*, client_t*, char**);
+    char *help;
 } command_t;
 
 /**************************************
  * FUNCTION PREDECLARATION
  *************************************/
+
+int check_alphanumeric(char c, char sep);
+int count_word(char *str, char sep);
+char **my_strtok(char *str, char sep);
 
 /* MAIN FUNCTION */
 int myftp(int argc, char **argv);
@@ -115,5 +121,10 @@ void stop_server(int signal);
 int running_server(server_info_t *info);
 void manage_timeout_select(struct timeval *timeout);
 int handle_socket_activities(server_info_t *info);
+void quit_client(server_info_t *info);
+int handle_client_activities(server_info_t *info);
+
+/* COMMAND */
+void quit(server_info_t *info, client_t *client, char **cmd);
 
 #endif //NWP_MYFTP_2019_MYFTP_H

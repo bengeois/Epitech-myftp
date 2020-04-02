@@ -29,7 +29,6 @@ char *tcp_get_message2(char *line, char *buffer, int i, int j)
     return (newline);
 }
 
-
 char* tcp_get_message(int socket)
 {
     static char buffer[TCP_READ_SIZE];

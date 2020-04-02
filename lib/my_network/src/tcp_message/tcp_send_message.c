@@ -15,7 +15,7 @@ int tcp_send_message(int socket, message_t *message)
         return (TCP_OK);
 
     while ((sending_byte = write(socket, &message->buff[message->sending_pos],
-        strlen(&message->buff[message->sending_pos]))) > 0) {
+    strlen(&message->buff[message->sending_pos]))) > 0) {
 
         bzero(&message->buff[message->sending_pos], sending_byte);
         message->sending_pos += sending_byte;
