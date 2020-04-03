@@ -140,5 +140,6 @@ void user(server_info_t *info, client_t *client, char **cmd);
 void pass(server_info_t *info, client_t *client, char **cmd);
 void noop(server_info_t *info, client_t *client, char **cmd);
 void help(server_info_t *info, client_t *client, char **cmd);
+void pwd(server_info_t *info, client_t *client, char **cmd);
 
 #endif //NWP_MYFTP_2019_MYFTP_H

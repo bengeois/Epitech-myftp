@@ -213,9 +213,35 @@ test04()
   return
 }
 
+test05()
+{
+  local test_name="PWD"
+
+  local cmd1="PWD"
+  local cmd2="USER $USERNAME"
+  local cmd3="PASS $PASS"
+  local cmd4="PWD"
+
+  launch_client $HOST $PORT
+  if [[ ! $? -eq 1 ]]; then
+    echo "KO"
+    kill_client
+    return
+  fi
+
+  launch_test "$test_name" "$cmd1" 530
+  launch_test "$test_name" "$cmd2" 331
+  launch_test "$test_name" "$cmd3" 230
+  launch_test "$test_name" "$cmd4" 257
+
+  print_succeeded "$test_name"
+  return
+}
+
 test00
 test01
 test02
 test03
 test04
+test05
 clean

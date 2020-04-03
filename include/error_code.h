@@ -22,7 +22,7 @@
 #define E_230 "230 User logged in, proceed.\r\n"
 #define E_230A "230 Already logged in.\r\n"
 #define E_250 "250 Requested file action okay, completed.\r\n"
-#define E_257 "257 "%s" created.\r\n"
+#define E_257 "257 \"%s\" created.\r\n"
 #define E_331 "331 User name okay, need password.\r\n"
 #define E_332 "332 Need account for login.\r\n"
 #define E_500 "500 Unknown command.\r\n"

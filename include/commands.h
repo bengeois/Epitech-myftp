@@ -17,6 +17,7 @@ static const command_t commands[] =
         {"PASS", &pass, "Specify your password."},
         {"NOOP", &noop, "Do nothing."},
         {"HELP", &help, "List available commands."},
+        {"PWD", &pwd, "Print working directory."},
         {NULL, NULL, NULL}
     };
 
