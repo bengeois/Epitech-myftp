@@ -27,7 +27,5 @@ void delete_client(void *data)
         free(real_data->username);
     if (real_data->passwd)
         free(real_data->passwd);
-    if (real_data->home_dir)
-        free(real_data->home_dir);
     free(real_data);
 }

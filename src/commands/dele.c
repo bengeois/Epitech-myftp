@@ -7,11 +7,14 @@
 
 #include "myftp.h"
 
-void pwd(server_info_t *info, client_t *client, char **cmd)
+void dele(server_info_t *info, client_t *client, char **cmd)
 {
     (void)info;
-    (void)cmd;
     if (is_client_login(client) != LOGGED)
         return (add_message_client(client, E_530PL));
-    add_message_client(client, E_257, client->home_dir);
+    if (get_size_array(cmd) < 2)
+        return (add_message_client(client, E_530P));
+    if (remove(cmd[1]))
+        return (add_message_client(client, E_550));
+    add_message_client(client, E_250);
 }

@@ -18,6 +18,8 @@ static const command_t commands[] =
         {"NOOP", &noop, "Do nothing."},
         {"HELP", &help, "List available commands."},
         {"PWD", &pwd, "Print working directory."},
+        {"DELE", &dele, "Print working directory."},
+        {"CWD", &cwd, "Change working directory."},
         {NULL, NULL, NULL}
     };
 

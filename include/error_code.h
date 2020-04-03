@@ -31,5 +31,6 @@
 #define E_530C "530 Can't change from guest user.\r\n"
 #define E_530L "530 Login incorrect.\r\n"
 #define E_530PL "530 Please login with USER and PASS.\r\n"
+#define E_550 "550 Permission denied.\r\n"
 
 #endif //NWP_MYFTP_2019_ERROR_CODE_H

@@ -238,10 +238,44 @@ test05()
   return
 }
 
+test06()
+{
+  local test_name="DELE"
+  touch file_to_delete
+  mkdir folder_to_delete
+
+  local cmd1="DELE"
+  local cmd2="USER $USERNAME"
+  local cmd3="PASS $PASS"
+  local cmd4="DELE file_to_delete"
+  local cmd5="DELE file_to_delete"
+  local cmd6="DELE folder_to_delete"
+  local cmd7="DELE folder_to_delete"
+
+  launch_client $HOST $PORT
+  if [[ ! $? -eq 1 ]]; then
+    echo "KO"
+    kill_client
+    return
+  fi
+
+  launch_test "$test_name" "$cmd1" 530
+  launch_test "$test_name" "$cmd2" 331
+  launch_test "$test_name" "$cmd3" 230
+  launch_test "$test_name" "$cmd4" 250
+  launch_test "$test_name" "$cmd5" 550
+  launch_test "$test_name" "$cmd6" 250
+  launch_test "$test_name" "$cmd7" 550
+
+  print_succeeded "$test_name"
+  return
+}
+
 test00
 test01
 test02
 test03
 test04
 test05
+test06
 clean

@@ -61,7 +61,8 @@ typedef struct client_s
     message_t *sending;
     char *username;
     char *passwd;
-    char *home_dir;
+    char home_dir[PATH_MAX];
+    char cur_dir[PATH_MAX];
     bool quit;
 } client_t;
 
@@ -141,5 +142,7 @@ void pass(server_info_t *info, client_t *client, char **cmd);
 void noop(server_info_t *info, client_t *client, char **cmd);
 void help(server_info_t *info, client_t *client, char **cmd);
 void pwd(server_info_t *info, client_t *client, char **cmd);
+void dele(server_info_t *info, client_t *client, char **cmd);
+void cwd(server_info_t *info, client_t *client, char **cmd);
 
 #endif //NWP_MYFTP_2019_MYFTP_H

@@ -14,7 +14,7 @@ int detect_command(server_info_t *info, node_t *temp, char *str)
     cmd_tab = my_strtok(str, ' ');
     if (cmd_tab == NULL)
         return (TCP_OK);
-    for (int i = 0; commands[i].name != NULL; i++) {
+    for (int i = 0; commands[i].name != NULL && cmd_tab[0]; i++) {
         if (!strcasecmp(commands[i].name, cmd_tab[0])) {
             commands[i].func(info, temp->value, cmd_tab);
             free_array(cmd_tab);
