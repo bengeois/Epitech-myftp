@@ -20,9 +20,8 @@ int write_activity(server_info_t *info, node_t **temp)
 
 int read_activity(server_info_t *info, node_t **temp)
 {
-    ((client_t*)(*temp)->value)->received = tcp_get_message(((client_t*)(*temp)
-        ->value)->socket);
-    if (((client_t*)(*temp)->value)->received == NULL) {
+    if ((tcp_receive_message(((client_t*)(*temp)->value)->socket, ((client_t*)
+    (*temp)->value)->received)) == TCP_DISCONNECT) {
         disconnect_client(info, temp, "Client disconnected");
         return (LOOP_CONTINUE);
     }

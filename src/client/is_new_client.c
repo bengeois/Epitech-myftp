@@ -45,6 +45,6 @@ int is_new_client(server_info_t *info)
     }
     fprintf(stdout, "Client from %s:%i\n", inet_ntoa(new->addr
     .sin_addr), ntohs(new->addr.sin_port));
-    add_message_client(new, E_220); // A REFAIRE ?
+    add_message_client(new, E_220);
     return (TCP_OK);
 }

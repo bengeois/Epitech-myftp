@@ -54,7 +54,7 @@ typedef struct client_s
     int socket;
     struct sockaddr_in addr;
     transfer_mode_t mode;
-    char *received;
+    message_t *received;
     message_t *sending;
     char *username;
     char *passwd;
@@ -86,9 +86,10 @@ typedef struct commands_s
  * FUNCTION PREDECLARATION
  *************************************/
 
-int check_alphanumeric(char c, char sep);
-int count_word(char *str, char sep);
+/* UTILS */
 char **my_strtok(char *str, char sep);
+int get_size_array(char **array);
+char **free_array(char **array);
 
 /* MAIN FUNCTION */
 int myftp(int argc, char **argv);
@@ -118,6 +119,7 @@ int get_new_client_info(server_info_t *info, client_t *new_client);
 int is_new_client(server_info_t *info);
 void add_message_client(client_t *client, char *str, ...);
 
+
 /* SERVER */
 int start_server(server_info_t *info);
 void stop_server(int signal);
@@ -126,6 +128,8 @@ void manage_timeout_select(struct timeval *timeout);
 int handle_socket_activities(server_info_t *info);
 void quit_client(server_info_t *info);
 int handle_client_activities(server_info_t *info);
+int detect_command(server_info_t *info, node_t *temp, char *str);
+
 
 /* COMMAND */
 void quit(server_info_t *info, client_t *client, char **cmd);

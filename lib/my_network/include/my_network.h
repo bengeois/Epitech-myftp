@@ -18,7 +18,7 @@
  *************************************/
 
 #define TCP_MSGBUFF_SIZE 10000
-#define TCP_READ_SIZE 1
+#define TCP_READ_SIZE 100
 
 #define TCP_OK 0
 #define TCP_ERROR -1
@@ -45,8 +45,10 @@ message_t *tcp_new_message(void);
 int tcp_add_to_message(message_t *message, char *str);
 int tcp_send_message(int socket, message_t *message);
 bool tcp_is_waiting_message(message_t *message);
+int tcp_receive_message(int socket, message_t *receive);
 char *tcp_get_message2(char *line, char *buffer, int i, int j);
 char *tcp_get_message(int socket);
+char *tcp_getline_receive(message_t *receive);
 
 /* SOCKET */
 int create_socket(void);

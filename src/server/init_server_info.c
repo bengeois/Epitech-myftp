@@ -26,6 +26,6 @@ server_info_t *init_server_info(void)
     FD_ZERO(&info->write_fd);
     FD_ZERO(&info->except_fd);
     bzero(&info->timeout, sizeof(struct timeval));
-    info->timeout.tv_sec = 2; // A FAIRE
+    info->timeout.tv_sec = 2;
     return (info);
 }

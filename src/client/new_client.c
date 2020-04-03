@@ -20,6 +20,7 @@ client_t *new_client(void)
     new_client->passwd = NULL;
     new_client->home_dir = NULL;
     new_client->sending = tcp_new_message();
+    new_client->received = tcp_new_message();
     if (new_client->sending == NULL) {
         free(new_client);
         return (NULL);

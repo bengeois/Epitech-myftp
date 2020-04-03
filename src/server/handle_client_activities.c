@@ -8,36 +8,40 @@
 #include "myftp.h"
 #include "commands.h"
 
-int detect_command(server_info_t *info, node_t *temp)
+int detect_command(server_info_t *info, node_t *temp, char *str)
 {
     char **cmd_tab = NULL;
-    if (((client_t*)temp->value)->received == NULL)
-        return (TCP_OK);
-    cmd_tab = my_strtok(((client_t*)temp->value)->received, ' ');
+    cmd_tab = my_strtok(str, ' ');
     if (cmd_tab == NULL)
         return (TCP_OK);
     for (int i = 0; commands[i].name != NULL; i++) {
         if (!strcasecmp(commands[i].name, cmd_tab[0])) {
             commands[i].func(info, temp->value, cmd_tab);
-            free(cmd_tab);
-            free(((client_t*)temp->value)->received);
-            ((client_t*)temp->value)->received = NULL;
+            free_array(cmd_tab);
             return (TCP_OK);
         }
     }
     add_message_client(temp->value, E_500);
-    free(cmd_tab);
-    free(((client_t*)temp->value)->received);
-    ((client_t*)temp->value)->received = NULL;
+    free_array(cmd_tab);
     return (TCP_OK);
 }
 
 int handle_client_activities(server_info_t *info)
 {
     node_t *temp = info->clients;
+    char *line = NULL;
+
     while (temp) {
-        if (detect_command(info, temp) == TCP_ERROR)
+        if ((line = tcp_getline_receive(((client_t*)temp->value)->received))
+        == NULL) {
+            temp = temp->next;
+            continue;
+        }
+        if (detect_command(info, temp, line) == TCP_ERROR) {
+            free(line);
             return (TCP_ERROR);
+        }
+        free(line);
         temp = temp->next;
     }
     return (TCP_OK);
