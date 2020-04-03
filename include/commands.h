@@ -12,9 +12,11 @@
 
 static const command_t commands[] =
     {
-        {"QUIT", &quit, "Leave the server and close the client.\n"},
-        {"USER", &user, "Specify your username.\n"},
-        {"PASS", &pass, "Specify your password.\n"},
+        {"QUIT", &quit, "Leave the server and close the client."},
+        {"USER", &user, "Specify your username."},
+        {"PASS", &pass, "Specify your password."},
+        {"NOOP", &noop, "Do nothing."},
+        {"HELP", &help, "List available commands."},
         {NULL, NULL, NULL}
     };
 

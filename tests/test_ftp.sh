@@ -123,5 +123,99 @@ test00()
   return
 }
 
+test01()
+{
+  local test_name="QUIT CONNECTION"
+
+  local cmd1="QUIT"
+
+  launch_client $HOST $PORT
+  if [[ ! $? -eq 1 ]]; then
+    echo "KO"
+    kill_client
+    return
+  fi
+
+  launch_test "$test_name" "$cmd1" 221
+
+  print_succeeded "$test_name"
+  return
+}
+
+test02()
+{
+  local test_name="UNKNOWN COMMAND"
+
+  local cmd1="USER $USERNAME"
+  local cmd2="PASS $PASS"
+  local cmd3="WHAT"
+
+  launch_client $HOST $PORT
+  if [[ ! $? -eq 1 ]]; then
+    echo "KO"
+    kill_client
+    return
+  fi
+
+  launch_test "$test_name" "$cmd1" 331
+  launch_test "$test_name" "$cmd2" 230
+  launch_test "$test_name" "$cmd3" 500
+
+  print_succeeded "$test_name"
+  return
+}
+
+test03()
+{
+  local test_name="COMMAND WITHOUT LOGGED IN"
+
+  local cmd1="NOOP"
+
+  launch_client $HOST $PORT
+  if [[ ! $? -eq 1 ]]; then
+    echo "KO"
+    kill_client
+    return
+  fi
+
+  launch_test "$test_name" "$cmd1" 530
+
+  print_succeeded "$test_name"
+  return
+}
+
+test04()
+{
+  local test_name="HELP"
+
+  local cmd1="HELP"
+  local cmd2="USER $USERNAME"
+  local cmd3="PASS $PASS"
+  local cmd4="HELP"
+  local cmd5="HELP QUIT"
+  local cmd6="HELP ABC"
+
+  launch_client $HOST $PORT
+  if [[ ! $? -eq 1 ]]; then
+    echo "KO"
+    kill_client
+    return
+  fi
+
+  launch_test "$test_name" "$cmd1" 530
+  launch_test "$test_name" "$cmd2" 331
+  launch_test "$test_name" "$cmd3" 230
+  launch_test "$test_name" "$cmd4" 214
+  launch_test "$test_name" "$cmd5" 214
+  launch_test "$test_name" "$cmd6" 214
+
+  print_succeeded "$test_name"
+  return
+}
+
 test00
+test01
+test02
+test03
+test04
 clean

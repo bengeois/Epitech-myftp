@@ -21,7 +21,10 @@ int detect_command(server_info_t *info, node_t *temp, char *str)
             return (TCP_OK);
         }
     }
-    add_message_client(temp->value, E_500);
+    if (is_client_login(temp->value) != LOGGED)
+        add_message_client(temp->value, E_530PL);
+    else
+        add_message_client(temp->value, E_500);
     free_array(cmd_tab);
     return (TCP_OK);
 }

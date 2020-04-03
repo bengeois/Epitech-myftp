@@ -12,7 +12,9 @@
 #define E_125 "125 Data connection already open; transfer starting.\r\n"
 #define E_150 "150 File status okay; about to open connection.\r\n"
 #define E_200 "200 Command okay.\r\n"
-#define E_214 "214 Help message.\r\n"
+#define E_214 "214 Help OK.\r\n"
+#define E_214CD "214 %s : %s.\r\n"
+#define E_214C "214 The following commands are recognized\r\n"
 #define E_220 "220 Service ready for new user.\r\n"
 #define E_221 "221 Service closing control connection.\r\n"
 #define E_226 "226 Closing data connection.\r\n"
@@ -28,5 +30,6 @@
 #define E_530P "530 Permission denied.\r\n"
 #define E_530C "530 Can't change from guest user.\r\n"
 #define E_530L "530 Login incorrect.\r\n"
+#define E_530PL "530 Please login with USER and PASS.\r\n"
 
 #endif //NWP_MYFTP_2019_ERROR_CODE_H
