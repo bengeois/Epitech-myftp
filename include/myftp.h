@@ -17,6 +17,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <netinet/in.h>
+#include <pwd.h>
 #include "my_network.h"
 #include "generic_list.h"
 #include "error_code.h"
@@ -40,7 +41,8 @@ bool server_stop;
 typedef enum transfer_mode_s
 {
     PASSIVE,
-    ACTIVE
+    ACTIVE,
+    UNKNOWN
 } transfer_mode_t;
 
 /**************************************
@@ -51,11 +53,12 @@ typedef struct client_s
 {
     int socket;
     struct sockaddr_in addr;
-    char *username;
-    char *password;
     transfer_mode_t mode;
     char *received;
     message_t *sending;
+    char *username;
+    char *passwd;
+    char *home_dir;
     bool quit;
 } client_t;
 
@@ -126,5 +129,7 @@ int handle_client_activities(server_info_t *info);
 
 /* COMMAND */
 void quit(server_info_t *info, client_t *client, char **cmd);
+void user(server_info_t *info, client_t *client, char **cmd);
+void pass(server_info_t *info, client_t *client, char **cmd);
 
 #endif //NWP_MYFTP_2019_MYFTP_H

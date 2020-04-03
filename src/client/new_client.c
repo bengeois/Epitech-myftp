@@ -15,6 +15,10 @@ client_t *new_client(void)
         return (NULL);
     new_client->socket = -1;
     new_client->received = NULL;
+    new_client->mode = UNKNOWN;
+    new_client->username = NULL;
+    new_client->passwd = NULL;
+    new_client->home_dir = NULL;
     new_client->sending = tcp_new_message();
     if (new_client->sending == NULL) {
         free(new_client);

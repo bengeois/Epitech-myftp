@@ -23,5 +23,11 @@ void delete_client(void *data)
         free(real_data->received);
     if (real_data->sending)
         free(real_data->sending);
+    if (real_data->username)
+        free(real_data->username);
+    if (real_data->passwd)
+        free(real_data->passwd);
+    if (real_data->home_dir)
+        free(real_data->home_dir);
     free(real_data);
 }

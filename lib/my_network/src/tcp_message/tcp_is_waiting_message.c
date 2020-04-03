@@ -9,7 +9,7 @@
 
 bool tcp_is_waiting_message(message_t *message)
 {
-    if (message->buff[message->sending_pos] == 0)
+    if (message->buff[message->read_pos] == 0)
         return (false);
     return (true);
 }

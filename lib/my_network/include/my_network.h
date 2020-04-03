@@ -33,7 +33,7 @@ typedef struct message_s
 {
     char buff[TCP_MSGBUFF_SIZE + 1];
     int write_pos;
-    int sending_pos;
+    int read_pos;
 } message_t;
 
 /**************************************

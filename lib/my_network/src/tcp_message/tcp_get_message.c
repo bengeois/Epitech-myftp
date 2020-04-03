@@ -41,7 +41,7 @@ char* tcp_get_message(int socket)
             new = size = read(socket, buffer, TCP_READ_SIZE);
             buffer[size] = '\0';
         }
-        if (buffer[i + j] == '\n' && new > 0) {
+        if (buffer[i + j] == '\r' && new > 0) {
             line = tcp_get_message2(line, buffer, i, j);
             i = i + j + 1;
             return (line);
