@@ -22,6 +22,7 @@
 #define E_230 "230 User logged in, proceed.\r\n"
 #define E_230A "230 Already logged in.\r\n"
 #define E_250 "250 Requested file action okay, completed.\r\n"
+#define E_250D "250 Directory successfully changed.\r\n"
 #define E_257 "257 \"%s\" created.\r\n"
 #define E_331 "331 User name okay, need password.\r\n"
 #define E_332 "332 Need account for login.\r\n"
@@ -32,5 +33,6 @@
 #define E_530L "530 Login incorrect.\r\n"
 #define E_530PL "530 Please login with USER and PASS.\r\n"
 #define E_550 "550 Permission denied.\r\n"
+#define E_550F "550 Failed to change directory.\r\n"
 
 #endif //NWP_MYFTP_2019_ERROR_CODE_H

@@ -271,6 +271,45 @@ test06()
   return
 }
 
+test07()
+{
+  local test_name="CWD"
+
+  local cmd1="CWD"
+  local cmd2="USER $USERNAME"
+  local cmd3="PASS $PASS"
+  local cmd4="CWD .."
+  local cmd5="CWD .."
+  local cmd6="CWD /home/bourgeois"
+  local cmd7="CWD Downloads"
+  local cmd8="CWD Desktop"
+  local cmd9="CWD ../Desktop"
+  local cmd10="CWD /"
+  local cmd11="CWD /home/bourgeois/Downloads/../Desktop"
+
+  launch_client $HOST $PORT
+  if [[ ! $? -eq 1 ]]; then
+    echo "KO"
+    kill_client
+    return
+  fi
+
+  launch_test "$test_name" "$cmd1" 530
+  launch_test "$test_name" "$cmd2" 331
+  launch_test "$test_name" "$cmd3" 230
+  launch_test "$test_name" "$cmd4" 250
+  launch_test "$test_name" "$cmd5" 250
+  launch_test "$test_name" "$cmd6" 250
+  launch_test "$test_name" "$cmd7" 250
+  launch_test "$test_name" "$cmd8" 550
+  launch_test "$test_name" "$cmd9" 250
+  launch_test "$test_name" "$cmd10" 250
+  launch_test "$test_name" "$cmd11" 250
+
+  print_succeeded "$test_name"
+  return
+}
+
 test00
 test01
 test02
@@ -278,4 +317,5 @@ test03
 test04
 test05
 test06
+test07
 clean
