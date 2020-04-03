@@ -144,5 +144,6 @@ void help(server_info_t *info, client_t *client, char **cmd);
 void pwd(server_info_t *info, client_t *client, char **cmd);
 void dele(server_info_t *info, client_t *client, char **cmd);
 void cwd(server_info_t *info, client_t *client, char **cmd);
+void cdup(server_info_t *info, client_t *client, char **cmd);
 
 #endif //NWP_MYFTP_2019_MYFTP_H

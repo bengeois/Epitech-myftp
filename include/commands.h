@@ -20,6 +20,7 @@ static const command_t commands[] =
         {"PWD", &pwd, "Print working directory."},
         {"DELE", &dele, "Print working directory."},
         {"CWD", &cwd, "Change working directory."},
+        {"CDUP", &cdup, "Change working to parent directory."},
         {NULL, NULL, NULL}
     };
 
