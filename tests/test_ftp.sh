@@ -241,16 +241,17 @@ test05()
 test06()
 {
   local test_name="DELE"
-  touch file_to_delete
-  mkdir folder_to_delete
+  touch /home/bourgeois/Desktop/file_to_delete
+  mkdir /home/bourgeois/Desktop/folder_to_delete
 
   local cmd1="DELE"
   local cmd2="USER $USERNAME"
   local cmd3="PASS $PASS"
-  local cmd4="DELE file_to_delete"
+  local cmd4="CWD /home/bourgeois/Desktop"
   local cmd5="DELE file_to_delete"
-  local cmd6="DELE folder_to_delete"
+  local cmd6="DELE file_to_delete"
   local cmd7="DELE folder_to_delete"
+  local cmd8="DELE folder_to_delete"
 
   launch_client $HOST $PORT
   if [[ ! $? -eq 1 ]]; then
@@ -263,9 +264,10 @@ test06()
   launch_test "$test_name" "$cmd2" 331
   launch_test "$test_name" "$cmd3" 230
   launch_test "$test_name" "$cmd4" 250
-  launch_test "$test_name" "$cmd5" 550
-  launch_test "$test_name" "$cmd6" 250
-  launch_test "$test_name" "$cmd7" 550
+  launch_test "$test_name" "$cmd5" 250
+  launch_test "$test_name" "$cmd6" 550
+  launch_test "$test_name" "$cmd7" 250
+  launch_test "$test_name" "$cmd8" 550
 
   print_succeeded "$test_name"
   return
