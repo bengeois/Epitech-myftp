@@ -20,6 +20,8 @@ client_t *new_client(void)
     new_client->passwd = NULL;
     bzero(&new_client->home_dir, PATH_MAX);
     bzero(&new_client->cur_dir, PATH_MAX);
+    new_client->data_socket = -1;
+    new_client->data_port = 0;
     new_client->sending = tcp_new_message();
     new_client->received = tcp_new_message();
     if (new_client->sending == NULL) {

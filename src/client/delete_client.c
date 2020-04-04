@@ -27,5 +27,6 @@ void delete_client(void *data)
         free(real_data->username);
     if (real_data->passwd)
         free(real_data->passwd);
+    close_fd(&real_data->data_socket);
     free(real_data);
 }

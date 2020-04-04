@@ -21,6 +21,8 @@ static const command_t commands[] =
         {"DELE", &dele, "Print working directory."},
         {"CWD", &cwd, "Change working directory."},
         {"CDUP", &cdup, "Change working to parent directory."},
+        {"PASV", &pasv, "Entering passive mode."},
+        {"PORT", &port, "Entering active mode."},
         {NULL, NULL, NULL}
     };
 

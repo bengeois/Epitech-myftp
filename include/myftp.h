@@ -64,6 +64,9 @@ typedef struct client_s
     char home_dir[PATH_MAX];
     char cur_dir[PATH_MAX];
     bool quit;
+    int data_socket;
+    size_t data_port;
+    struct sockaddr_in data_addr;
 } client_t;
 
 typedef struct server_info_s
@@ -145,5 +148,7 @@ void pwd(server_info_t *info, client_t *client, char **cmd);
 void dele(server_info_t *info, client_t *client, char **cmd);
 void cwd(server_info_t *info, client_t *client, char **cmd);
 void cdup(server_info_t *info, client_t *client, char **cmd);
+void pasv(server_info_t *info, client_t *client, char **cmd);
+void port(server_info_t *info, client_t *client, char **cmd);
 
 #endif //NWP_MYFTP_2019_MYFTP_H
