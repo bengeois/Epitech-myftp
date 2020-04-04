@@ -35,6 +35,8 @@
 #define LOGGED 1
 #define UNLOGGED -1
 
+#define PARALLEL_PROCESS 10
+
 bool server_stop;
 
 /**************************************
@@ -45,7 +47,7 @@ typedef enum transfer_mode_s
 {
     PASSIVE,
     ACTIVE,
-    UNKNOWN
+    UNDEFINED_MODE,
 } transfer_mode_t;
 
 /**************************************
@@ -66,6 +68,8 @@ typedef struct client_s
     bool quit;
     int data_socket;
     size_t data_port;
+    int data_client;
+    pid_t data_process[PARALLEL_PROCESS];
     struct sockaddr_in data_addr;
 } client_t;
 
@@ -127,6 +131,7 @@ int is_new_client(server_info_t *info);
 void add_message_client(client_t *client, char *str, ...);
 int is_client_login(client_t *client);
 
+
 /* SERVER */
 int start_server(server_info_t *info);
 void stop_server(int signal);
@@ -136,6 +141,11 @@ int handle_socket_activities(server_info_t *info);
 void quit_client(server_info_t *info);
 int handle_client_activities(server_info_t *info);
 int detect_command(server_info_t *info, node_t *temp, char *str);
+
+
+/* DATA PROCESS */
+int add_process_to_client(client_t *client, pid_t to_add);
+int wait_data_process(client_t *client);
 
 
 /* COMMAND */
@@ -150,5 +160,9 @@ void cwd(server_info_t *info, client_t *client, char **cmd);
 void cdup(server_info_t *info, client_t *client, char **cmd);
 void pasv(server_info_t *info, client_t *client, char **cmd);
 void port(server_info_t *info, client_t *client, char **cmd);
+void list(server_info_t *info, client_t *client, char **cmd);
+void retr(server_info_t *info, client_t *client, char **cmd);
+void stor(server_info_t *info, client_t *client, char **cmd);
+int handle_mode_open(client_t *client);
 
 #endif //NWP_MYFTP_2019_MYFTP_H

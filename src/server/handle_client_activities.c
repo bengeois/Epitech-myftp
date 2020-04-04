@@ -35,6 +35,7 @@ int handle_client_activities(server_info_t *info)
     char *line = NULL;
 
     while (temp) {
+        wait_data_process(temp->value);
         if ((line = tcp_getline_receive(((client_t*)temp->value)->received))
         == NULL) {
             temp = temp->next;

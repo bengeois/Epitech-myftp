@@ -23,6 +23,9 @@ static const command_t commands[] =
         {"CDUP", &cdup, "Change working to parent directory."},
         {"PASV", &pasv, "Entering passive mode."},
         {"PORT", &port, "Entering active mode."},
+        {"LIST", &list, "List all files in working directory."},
+        {"RETR", &retr, "Download file from server to client."},
+        {"STOR", &stor, "Upload file from client to server."},
         {NULL, NULL, NULL}
     };
 

@@ -29,6 +29,15 @@ static int create_passive_mode(server_info_t *info, client_t *client)
     return (TCP_OK);
 }
 
+static void print_passive_info(client_t *client)
+{
+    add_message_client(client, E_227, (client->data_addr.sin_addr.s_addr >>
+    (8*0)) & 0xff, (client->data_addr.sin_addr.s_addr >> (8*1)) & 0xff,
+    (client->data_addr.sin_addr.s_addr >> (8*2)) & 0xff,
+    (client->data_addr.sin_addr.s_addr >> (8*3)) & 0xff, ntohs(client->data_addr
+    .sin_port) / 256, ntohs(client->data_addr.sin_port) % 256);
+}
+
 void pasv(server_info_t *info, client_t *client, char **cmd)
 {
     (void)cmd;
@@ -41,9 +50,5 @@ void pasv(server_info_t *info, client_t *client, char **cmd)
         return (add_message_client(client, E_425));
     }
     client->mode = PASSIVE;
-    add_message_client(client, E_227, (client->data_addr.sin_addr.s_addr >>
-    (8*0)) & 0xff, (client->data_addr.sin_addr.s_addr >> (8*1)) & 0xff,
-    (client->data_addr.sin_addr.s_addr >> (8*2)) & 0xff,
-    (client->data_addr.sin_addr.s_addr >> (8*3)) & 0xff, ntohs(client->data_addr
-    .sin_port) / 256, ntohs(client->data_addr.sin_port) % 256);
+    print_passive_info(client);
 }
