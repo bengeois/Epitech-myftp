@@ -10,16 +10,17 @@
 
 static void exec_cmd_retr(client_t *client, char **cmd)
 {
+    //refaire avec FD
     FILE *output_file = NULL;
-    char str[4096];
+    char str[4096 + 1];
 
     if (chdir(client->cur_dir) == -1) {
-        dprintf(client->data_client, "Failed to exec LIST command");
+        dprintf(client->data_client, "Failed to exec RETR command");
         exit(0);
     }
-    bzero(str, 4096);
+    bzero(str, 4096 + 1);
     output_file = fopen(cmd[1], "rb");
-    while (fread(str, 1, 256, output_file)) {
+    while (fread(str, 1, 4096, output_file)) {
         dprintf(client->data_client, "%s", str);
         bzero(str, 4096);
     }
@@ -56,10 +57,10 @@ void retr(server_info_t *info, client_t *client, char **cmd)
     pid_t process = -1;
     if (is_client_login(client) != LOGGED)
         return (add_message_client(client, E_530PL));
-    if (get_size_array(cmd) < 2)
-        return (add_message_client(client, E_501));
     if (client->mode == UNDEFINED_MODE)
         return (add_message_client(client, E_425));
+    if (get_size_array(cmd) < 2)
+        return (add_message_client(client, E_501));
     if (!is_file_on_server(client, cmd[1]))
         return (add_message_client(client, E_550));
     if (handle_mode_open(client) == TCP_ERROR)

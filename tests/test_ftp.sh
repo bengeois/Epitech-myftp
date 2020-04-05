@@ -16,7 +16,7 @@ OUT=outfile
 TAIL=`which tail`
 NC="`which nc` -C"
 TIMEOUT=1 #max time before reading server response
-
+PORT_TO_CONNECT=0
 
 getcode()
 {
@@ -40,6 +40,14 @@ print_succeeded()
   echo "$1 test succeeded"
   echo "OK"  
   kill_client 2>&1 >/dev/null
+}
+
+get_port()
+{
+    local result_ip=`cat -e $OUT | grep -oP '\(\K[^\)]+'`
+    local PORT1=$(echo $result_ip | cut -d ',' -f 5- | cut -d ',' -f 1)
+    local PORT2=$(echo $result_ip | cut -d ',' -f 6-)
+    PORT_TO_CONNECT=$(expr $PORT1 \* 256 + $PORT2)
 }
 
 launch_client()
@@ -355,6 +363,32 @@ test08()
   return
 }
 
+test09()
+{
+  local test_name="PASV"
+
+  local cmd1="PASV"
+  local cmd2="USER $USERNAME"
+  local cmd3="PASS $PASS"
+  local cmd4="PASV"
+
+  launch_client $HOST $PORT
+  if [[ ! $? -eq 1 ]]; then
+    echo "KO"
+    kill_client
+    return
+  fi
+
+  launch_test "$test_name" "$cmd1" 530
+  launch_test "$test_name" "$cmd2" 331
+  launch_test "$test_name" "$cmd3" 230
+  launch_test "$test_name" "$cmd4" 227
+
+  print_succeeded "$test_name"
+  return
+}
+
+
 test00
 test01
 test02
@@ -364,4 +398,5 @@ test05
 test06
 test07
 test08
+test09
 clean
