@@ -6,12 +6,12 @@
 */
 
 #include <sys/stat.h>
+#include <fcntl.h>
 #include "myftp.h"
 
 static void exec_cmd_retr(client_t *client, char **cmd)
 {
-    //refaire avec FD
-    FILE *output_file = NULL;
+    int output_file = -1;
     char str[4096 + 1];
 
     if (chdir(client->cur_dir) == -1) {
@@ -19,12 +19,12 @@ static void exec_cmd_retr(client_t *client, char **cmd)
         exit(0);
     }
     bzero(str, 4096 + 1);
-    output_file = fopen(cmd[1], "rb");
-    while (fread(str, 1, 4096, output_file)) {
+    output_file = open(cmd[1], O_RDONLY);
+    while (read(output_file, str, 4096)) {
         dprintf(client->data_client, "%s", str);
         bzero(str, 4096);
     }
-    fclose(output_file);
+    close(output_file);
     exit(0);
 }
 
