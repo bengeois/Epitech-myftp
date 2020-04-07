@@ -24,7 +24,6 @@ static int get_connect_port_info(client_t *client, char *info)
 {
     char **info_ip = my_strtok(info, ',');
     char ip[200];
-
     if (!info_ip || get_size_array(info_ip) < 6 || !check_info_ip(info_ip)) {
         free_array(info_ip);
         return (TCP_ERROR);
@@ -33,7 +32,8 @@ static int get_connect_port_info(client_t *client, char *info)
         return (TCP_ERROR);
     bzero(ip, 200);
     client->data_addr.sin_family = AF_INET;
-    client->data_addr.sin_port = htons(atoi(info_ip[4]) * 256 + atoi(info_ip[5]));
+    client->data_addr.sin_port = htons(atoi(info_ip[4])
+    * 256 + atoi(info_ip[5]));
     strcpy(ip, info_ip[0]);
     for (int i = 1; i < 4; i++) {
         strcat(ip, ".");

@@ -54,10 +54,8 @@ void stor(server_info_t *info, client_t *client, char **cmd)
         close_fd(&client->socket_mode);
         return (add_message_client(client, E_425U));
     }
-    if (process == 0)
-        exec_cmd_stor(client, cmd);
-    else
-        add_process_to_client(client, process);
+    (process == 0) ? exec_cmd_stor(client, cmd) :
+    add_process_to_client(client, process);
     return (add_message_client(client, E_150));
 
 }
