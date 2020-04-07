@@ -39,7 +39,7 @@ static int get_connect_port_info(client_t *client, char *info)
         strcat(ip, ".");
         strcat(ip, info_ip[i]);
     }
-    free(info_ip);
+    free_array(info_ip);
     if (inet_pton(AF_INET, ip, &client->data_addr.sin_addr) <= 0)
         return (TCP_ERROR);
     return (TCP_OK);
