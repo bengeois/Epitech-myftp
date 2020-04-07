@@ -15,8 +15,8 @@ int wait_data_process(client_t *client)
     for (int i = 0; i < PARALLEL_PROCESS && client->data_process[i] != 0; i++) {
         check = waitpid(client->data_process[i], &status, WNOHANG);
         if (check == client->data_process[i]) {
-            close_fd(&client->data_client);
-            close_fd(&client->data_socket);
+            close_fd(&client->socket_data);
+            close_fd(&client->socket_mode);
             client->data_process[i] = 0;
             client->mode = UNDEFINED_MODE;
             add_message_client(client, E_226);

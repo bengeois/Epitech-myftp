@@ -14,12 +14,12 @@ static void exec_cmd_stor(client_t *client, char **cmd)
     char str[4096 + 1];
 
     if (chdir(client->cur_dir) == -1 || output_file == -1) {
-        dprintf(client->data_client, "Failed to exec STOR command");
+        dprintf(client->socket_data, "Failed to exec STOR command");
         exit(0);
     }
     bzero(str, 4096 + 1);
 
-    while (read(client->data_client, str, 4096) != 0) {
+    while (read(client->socket_data, str, 4096) != 0) {
         dprintf(output_file, "%s", str);
         bzero(str, 4096 + 1);
     }
@@ -51,7 +51,7 @@ void stor(server_info_t *info, client_t *client, char **cmd)
     if (handle_mode_open(client) == TCP_ERROR)
         return (add_message_client(client, E_425U));
     if ((process = fork()) == -1) {
-        close_fd(&client->data_socket);
+        close_fd(&client->socket_mode);
         return (add_message_client(client, E_425U));
     }
     if (process == 0)

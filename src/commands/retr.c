@@ -15,13 +15,13 @@ static void exec_cmd_retr(client_t *client, char **cmd)
     char str[4096 + 1];
 
     if (chdir(client->cur_dir) == -1) {
-        dprintf(client->data_client, "Failed to exec RETR command");
+        dprintf(client->socket_data, "Failed to exec RETR command");
         exit(0);
     }
     bzero(str, 4096 + 1);
     output_file = open(cmd[1], O_RDONLY);
     while (read(output_file, str, 4096)) {
-        dprintf(client->data_client, "%s", str);
+        dprintf(client->socket_data, "%s", str);
         bzero(str, 4096);
     }
     close(output_file);
@@ -66,7 +66,7 @@ void retr(server_info_t *info, client_t *client, char **cmd)
     if (handle_mode_open(client) == TCP_ERROR)
         return (add_message_client(client, E_425U));
     if ((process = fork()) == -1) {
-        close_fd(&client->data_socket);
+        close_fd(&client->socket_mode);
         return (add_message_client(client, E_425U));
     }
     if (process == 0)

@@ -66,11 +66,13 @@ typedef struct client_s
     char home_dir[PATH_MAX];
     char cur_dir[PATH_MAX];
     bool quit;
-    int data_socket;
-    size_t data_port;
-    int data_client;
-    pid_t data_process[PARALLEL_PROCESS];
+    /* SOCKET PASV OR PORT */
+    int socket_mode;
+    /* FD CLIENT FOR READ OR WRITE */
+    int socket_data;
     struct sockaddr_in data_addr;
+    /* FORK PID */
+    pid_t data_process[PARALLEL_PROCESS];
 } client_t;
 
 typedef struct server_info_s

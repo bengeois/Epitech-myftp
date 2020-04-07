@@ -13,13 +13,13 @@ static void exec_cmd_list(client_t *client)
     char str[4096];
 
     if (chdir(client->cur_dir) == -1) {
-        dprintf(client->data_client, "Failed to exec LIST command");
+        dprintf(client->socket_data, "Failed to exec LIST command");
         exit(0);
     }
     bzero(str, 4096);
     output_cmd = popen("ls -l", "r");
     while (fread(str, 1, 256, output_cmd)) {
-        dprintf(client->data_client, "%s", str);
+        dprintf(client->socket_data, "%s", str);
         bzero(str, 4096);
     }
     fclose(output_cmd);
@@ -38,7 +38,7 @@ void list(server_info_t *info, client_t *client, char **cmd)
     if (handle_mode_open(client) == TCP_ERROR)
         return (add_message_client(client, E_425U));
     if ((process = fork()) == -1) {
-        close_fd(&client->data_socket);
+        close_fd(&client->socket_mode);
         return (add_message_client(client, E_425U));
     }
     if (process == 0)

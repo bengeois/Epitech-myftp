@@ -11,19 +11,19 @@
 static int create_passive_mode(server_info_t *info, client_t *client)
 {
     socklen_t size;
-    if ((client->data_socket = create_socket()) == TCP_ERROR)
+    if ((client->socket_mode = create_socket()) == TCP_ERROR)
         return (TCP_ERROR);
     client->data_addr = info->address;
     client->data_addr.sin_port = 0;
     if (inet_pton(AF_INET, SERVER_IP, &client->data_addr.sin_addr) <= 0)
         return (TCP_ERROR);
-    if (bind(client->data_socket, (struct sockaddr *)&client->data_addr, sizeof
+    if (bind(client->socket_mode, (struct sockaddr *)&client->data_addr, sizeof
         (client->data_addr)) < 0)
         return (TCP_ERROR);
-    if (listen(client->data_socket, LISTEN_CLIENT_QUEUE) < 0)
+    if (listen(client->socket_mode, LISTEN_CLIENT_QUEUE) < 0)
         return (TCP_ERROR);
     size = sizeof(client->data_addr);
-    if (getsockname(client->data_socket, (struct sockaddr *)
+    if (getsockname(client->socket_mode, (struct sockaddr *)
         &client->data_addr, &size) == -1)
         return (TCP_ERROR);
     return (TCP_OK);
@@ -44,9 +44,9 @@ void pasv(server_info_t *info, client_t *client, char **cmd)
     if (is_client_login(client) != LOGGED)
         return (add_message_client(client, E_530PL));
     if (client->mode == PASSIVE)
-        close_fd(&client->data_socket);
+        close_fd(&client->socket_mode);
     if (create_passive_mode(info, client) == TCP_ERROR) {
-        close_fd(&client->data_socket);
+        close_fd(&client->socket_mode);
         return (add_message_client(client, E_425));
     }
     client->mode = PASSIVE;
