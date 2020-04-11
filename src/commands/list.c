@@ -11,7 +11,7 @@ static void get_complete_list_cmd(char *complete_cmd, char **cmd)
 {
     bzero(complete_cmd, PATH_MAX);
     strcpy(complete_cmd, "ls -l ");
-    if (get_size_array(cmd) > 1)
+    if (get_size_array(cmd) > 1 && access(cmd[1], F_OK) == 0)
         strcat(complete_cmd, cmd[1]);
 }
 
