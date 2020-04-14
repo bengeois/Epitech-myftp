@@ -18,6 +18,7 @@
 #include <stdio.h>
 #include <netinet/in.h>
 #include <pwd.h>
+#include <stdbool.h>
 #include "my_network.h"
 #include "generic_list.h"
 #include "error_code.h"
