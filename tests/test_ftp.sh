@@ -386,7 +386,209 @@ test09()
   return
 }
 
-./myftp 3100 . &
+test10()
+{
+  local test_name="PORT"
+
+  local cmd1="PORT"
+  local cmd2="USER $USERNAME"
+  local cmd3="PASS $PASS"
+  local cmd4="PORT"
+  local cmd5="PORT 127.0.0.1 10222"
+  local cmd6="PORT 127,0,0,1 10222"
+  local cmd7="PORT 127,0,0,a,39,238"
+  local cmd8="PORT 127,0,0,1,3t,238"
+  local cmd9="PORT 127,0,0,1,3"
+
+  launch_client $HOST $PORT
+  if [[ ! $? -eq 1 ]]; then
+    echo "KO"
+    kill_client
+    return
+  fi
+
+  launch_test "$test_name" "$cmd1" 530
+  launch_test "$test_name" "$cmd2" 331
+  launch_test "$test_name" "$cmd3" 230
+  launch_test "$test_name" "$cmd4" 501
+  launch_test "$test_name" "$cmd5" 501
+  launch_test "$test_name" "$cmd6" 501
+  launch_test "$test_name" "$cmd7" 501
+  launch_test "$test_name" "$cmd8" 501
+  launch_test "$test_name" "$cmd9" 501
+
+  print_succeeded "$test_name"
+  return
+}
+
+test11()
+{
+  local test_name="PORT with LIST - Good Connection"
+
+  local cmd1="PORT"
+  local cmd2="USER $USERNAME"
+  local cmd3="PASS $PASS"
+  local cmd4="PORT 127,0,0,1,39,238"
+  local cmd5="LIST"
+
+  launch_client $HOST $PORT
+  if [[ ! $? -eq 1 ]]; then
+    echo "KO"
+    kill_client
+    return
+  fi
+
+  nc -l 10222 &
+  launch_test "$test_name" "$cmd1" 530
+  launch_test "$test_name" "$cmd2" 331
+  launch_test "$test_name" "$cmd3" 230
+  launch_test "$test_name" "$cmd4" 200
+  launch_test "$test_name" "$cmd5" 150
+  (kill -9 %2) &> /dev/null
+
+  print_succeeded "$test_name"
+  return
+}
+
+test12()
+{
+  local test_name="PORT with LIST - Bad Connection"
+
+  local cmd1="PORT"
+  local cmd2="USER $USERNAME"
+  local cmd3="PASS $PASS"
+  local cmd4="PORT 127,0,0,1,39,238"
+  local cmd5="LIST"
+
+  launch_client $HOST $PORT
+  if [[ ! $? -eq 1 ]]; then
+    echo "KO"
+    kill_client
+    return
+  fi
+
+  launch_test "$test_name" "$cmd1" 530
+  launch_test "$test_name" "$cmd2" 331
+  launch_test "$test_name" "$cmd3" 230
+  launch_test "$test_name" "$cmd4" 200
+  launch_test "$test_name" "$cmd5" 425
+
+  print_succeeded "$test_name"
+  return
+}
+
+test13()
+{
+  local test_name="PORT with RETR - Good Connection"
+
+  local cmd1="PORT"
+  local cmd2="USER $USERNAME"
+  local cmd3="PASS $PASS"
+  local cmd4="PORT 127,0,0,1,39,238"
+  local cmd5="RETR Makefile"
+
+  launch_client $HOST $PORT
+  if [[ ! $? -eq 1 ]]; then
+    echo "KO"
+    kill_client
+    return
+  fi
+
+  nc -l 10222 &
+  launch_test "$test_name" "$cmd1" 530
+  launch_test "$test_name" "$cmd2" 331
+  launch_test "$test_name" "$cmd3" 230
+  launch_test "$test_name" "$cmd4" 200
+  launch_test "$test_name" "$cmd5" 150
+  (kill -9 %2) &> /dev/null
+
+  print_succeeded "$test_name"
+  return
+}
+
+test14()
+{
+  local test_name="PORT with RETR - Bad File"
+
+  local cmd1="PORT"
+  local cmd2="USER $USERNAME"
+  local cmd3="PASS $PASS"
+  local cmd4="PORT 127,0,0,1,39,238"
+  local cmd5="RETR Makefiled"
+
+  launch_client $HOST $PORT
+  if [[ ! $? -eq 1 ]]; then
+    echo "KO"
+    kill_client
+    return
+  fi
+
+  nc -l 10222 &
+  launch_test "$test_name" "$cmd1" 530
+  launch_test "$test_name" "$cmd2" 331
+  launch_test "$test_name" "$cmd3" 230
+  launch_test "$test_name" "$cmd4" 200
+  launch_test "$test_name" "$cmd5" 550
+  (kill -9 %2) &> /dev/null
+
+  print_succeeded "$test_name"
+  return
+}
+
+test15()
+{
+  local test_name="LIST with different PORT"
+
+  local cmd1="PORT"
+  local cmd2="USER $USERNAME"
+  local cmd3="PASS $PASS"
+  local cmd4="PORT 127,0,0,1,39,238"
+  local cmd5="LIST"
+  local cmd6="PORT 127,0,0,1,39,239"
+  local cmd7="LIST"
+  local cmd8="PORT 127,0,0,1,39,240"
+  local cmd9="LIST"
+  local cmd10="PORT 127,0,0,1,39,238"
+  local cmd11="LIST"
+  local cmd12="LIST"
+  local cmd13="LIST"
+
+  launch_client $HOST $PORT
+  if [[ ! $? -eq 1 ]]; then
+    echo "KO"
+    kill_client
+    return
+  fi
+
+  nc -l 10222 &
+  launch_test "$test_name" "$cmd1" 530
+  launch_test "$test_name" "$cmd2" 331
+  launch_test "$test_name" "$cmd3" 230
+  launch_test "$test_name" "$cmd4" 200
+  launch_test "$test_name" "$cmd5" 150
+  (kill -9 %2) &> /dev/null
+  launch_test "$test_name" "$cmd6" 200
+  nc -l 10223 &
+  sleep 1
+  launch_test "$test_name" "$cmd7" 150
+  (kill -9 %2) &> /dev/null
+  launch_test "$test_name" "$cmd8" 200
+  nc -l 10224 &
+  sleep 1
+  launch_test "$test_name" "$cmd9" 150
+  (kill -9 %2) &> /dev/null
+  launch_test "$test_name" "$cmd10" 200
+  launch_test "$test_name" "$cmd11" 425
+  nc -l 10222 &
+  sleep 1
+  launch_test "$test_name" "$cmd12" 150
+  launch_test "$test_name" "$cmd13" 425
+
+  print_succeeded "$test_name"
+  return
+}
+
+#./myftp 3100 . &
 
 test00
 test01
@@ -398,5 +600,11 @@ test06
 test07
 test08
 test09
+test10
+test11
+test12
+test13
+test14
+test15
 clean
-kill -9 %1
+#kill -9 %1
