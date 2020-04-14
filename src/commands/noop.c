@@ -13,4 +13,5 @@ void noop(server_info_t *info, client_t *client, char **cmd)
     (void)cmd;
     if (is_client_login(client) != LOGGED)
         return (add_message_client(client, E_530PL));
+    return (add_message_client(client, E_200));
 }

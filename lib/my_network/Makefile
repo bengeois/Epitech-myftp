@@ -19,6 +19,10 @@ CFLAGS = 	-Iinclude -W -Wall -Wshadow -Wextra -Werror
 
 OBJ	=	$(SRC:.c=.o)
 
+CC	=	gcc
+
+%.o:
+
 all:	$(OBJ)
 	ar rc $(NAME) $(OBJ)
 	mv $(NAME) ./../
