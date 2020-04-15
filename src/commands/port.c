@@ -27,8 +27,7 @@ static int get_connect_port_info(client_t *client, char *info)
     if (!info_ip || get_size_array(info_ip) < 6 || !check_info_ip(info_ip)) {
         free_array(info_ip);
         return (TCP_ERROR);
-    }
-    if ((client->socket_data = create_socket()) == TCP_ERROR)
+    } else if ((client->socket_data = create_socket()) == TCP_ERROR)
         return (TCP_ERROR);
     bzero(ip, 200);
     client->data_addr.sin_family = AF_INET;

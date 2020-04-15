@@ -45,7 +45,7 @@ void list(server_info_t *info, client_t *client, char **cmd)
     if (client->mode == UNDEFINED_MODE)
         return (add_message_client(client, E_425));
     if (handle_mode_open(client) == TCP_ERROR)
-        return (add_message_client(client, E_425U));
+        return;
     if ((process = fork()) == -1) {
         close_fd(&client->socket_mode);
         return (add_message_client(client, E_425U));

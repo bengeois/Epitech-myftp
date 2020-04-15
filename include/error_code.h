@@ -26,6 +26,7 @@
 #define E_257 "257 \"%s\" created.\r\n"
 #define E_331 "331 User name okay, need password.\r\n"
 #define E_332 "332 Need account for login.\r\n"
+#define E_421 "421 Timeout.\r\n"
 #define E_425 "425 Passive or active mode not activate, retry.\r\n"
 #define E_425U "425 Data connection unavailable.\r\n"
 #define E_500 "500 Unknown command.\r\n"

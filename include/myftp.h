@@ -9,8 +9,8 @@
 #define NWP_MYFTP_2019_MYFTP_H
 
 /**************************************
- * INCLUDE
- *************************************/
+** INCLUDE
+**************************************/
 
 #include <stdlib.h>
 #include <string.h>
@@ -24,8 +24,8 @@
 #include "error_code.h"
 
 /**************************************
- * DEFINE
- *************************************/
+** DEFINE
+**************************************/
 
 #define EXIT_ERROR 84
 #define LOOP_CONTINUE -1
@@ -41,8 +41,8 @@
 bool server_stop;
 
 /**************************************
- * ENUM DEFINITION
- *************************************/
+** ENUM DEFINITION
+**************************************/
 
 typedef enum transfer_mode_s
 {
@@ -52,8 +52,8 @@ typedef enum transfer_mode_s
 } transfer_mode_t;
 
 /**************************************
- * STRUCTURE DEFINITION
- *************************************/
+** STRUCTURE DEFINITION
+**************************************/
 
 typedef struct client_s
 {
@@ -67,12 +67,9 @@ typedef struct client_s
     char home_dir[PATH_MAX];
     char cur_dir[PATH_MAX];
     bool quit;
-    /* SOCKET PASV OR PORT */
     int socket_mode;
-    /* FD CLIENT FOR READ OR WRITE */
     int socket_data;
     struct sockaddr_in data_addr;
-    /* FORK PID */
     pid_t data_process[PARALLEL_PROCESS];
 } client_t;
 
@@ -97,8 +94,8 @@ typedef struct commands_s
 } command_t;
 
 /**************************************
- * FUNCTION PREDECLARATION
- *************************************/
+** FUNCTION PREDECLARATION
+**************************************/
 
 /* UTILS */
 char **my_strtok(char *str, char sep);
@@ -109,20 +106,16 @@ char **free_array(char **array);
 int myftp(int argc, char **argv);
 int get_user_info(int argc, char **argv, server_info_t *info);
 
-
 /* INIT FUNCTION */
 server_info_t *init_server_info(void);
 
-
 /* ERROR FUNCTION */
 int exit_properly(server_info_t *info, int error_code);
-
 
 /* FD */
 void close_fd(int *fd);
 void set_fd_set(server_info_t *info);
 int socket_error(server_info_t *info);
-
 
 /* CLIENT */
 client_t *new_client(void);
@@ -134,7 +127,6 @@ int is_new_client(server_info_t *info);
 void add_message_client(client_t *client, char *str, ...);
 int is_client_login(client_t *client);
 
-
 /* SERVER */
 int start_server(server_info_t *info);
 void stop_server(int signal);
@@ -145,11 +137,9 @@ void quit_client(server_info_t *info);
 int handle_client_activities(server_info_t *info);
 int detect_command(server_info_t *info, node_t *temp, char *str);
 
-
 /* DATA PROCESS */
 int add_process_to_client(client_t *client, pid_t to_add);
 int wait_data_process(client_t *client);
-
 
 /* COMMAND */
 void quit(server_info_t *info, client_t *client, char **cmd);

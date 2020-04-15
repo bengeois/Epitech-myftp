@@ -67,7 +67,7 @@ void stor(server_info_t *info, client_t *client, char **cmd)
     if (!can_create_file_on_server(client, cmd[1]))
         return (add_message_client(client, E_550));
     if (handle_mode_open(client) == TCP_ERROR)
-        return (add_message_client(client, E_425U));
+        return;
     if ((process = fork()) == -1) {
         close_fd(&client->socket_mode);
         return (add_message_client(client, E_425U));

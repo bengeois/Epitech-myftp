@@ -9,6 +9,6 @@
 
 void manage_timeout_select(struct timeval *timeout)
 {
-    timeout->tv_sec = 2;
-    timeout->tv_usec = 0;
+    timeout->tv_sec = 0;
+    timeout->tv_usec = 500000;
 }

@@ -443,7 +443,7 @@ test11()
   launch_test "$test_name" "$cmd2" 331
   launch_test "$test_name" "$cmd3" 230
   launch_test "$test_name" "$cmd4" 200
-  launch_test "$test_name" "$cmd5" 150
+  launch_test "$test_name" "$cmd5" 226
   (kill -9 %2) &> /dev/null
 
   print_succeeded "$test_name"
@@ -499,7 +499,7 @@ test13()
   launch_test "$test_name" "$cmd2" 331
   launch_test "$test_name" "$cmd3" 230
   launch_test "$test_name" "$cmd4" 200
-  launch_test "$test_name" "$cmd5" 150
+  launch_test "$test_name" "$cmd5" 226
   (kill -9 %2) &> /dev/null
 
   print_succeeded "$test_name"
@@ -565,23 +565,23 @@ test15()
   launch_test "$test_name" "$cmd2" 331
   launch_test "$test_name" "$cmd3" 230
   launch_test "$test_name" "$cmd4" 200
-  launch_test "$test_name" "$cmd5" 150
+  launch_test "$test_name" "$cmd5" 226
   (kill -9 %2) &> /dev/null
   launch_test "$test_name" "$cmd6" 200
   nc -l 10223 &
   sleep 1
-  launch_test "$test_name" "$cmd7" 150
+  launch_test "$test_name" "$cmd7" 226
   (kill -9 %2) &> /dev/null
   launch_test "$test_name" "$cmd8" 200
   nc -l 10224 &
   sleep 1
-  launch_test "$test_name" "$cmd9" 150
+  launch_test "$test_name" "$cmd9" 226
   (kill -9 %2) &> /dev/null
   launch_test "$test_name" "$cmd10" 200
   launch_test "$test_name" "$cmd11" 425
   nc -l 10222 &
   sleep 1
-  launch_test "$test_name" "$cmd12" 150
+  launch_test "$test_name" "$cmd12" 226
   launch_test "$test_name" "$cmd13" 425
 
   print_succeeded "$test_name"
