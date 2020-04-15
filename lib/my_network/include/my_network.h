@@ -14,8 +14,8 @@
 #include <stdbool.h>
 
 /**************************************
- * DEFINE DEFINITION
- *************************************/
+** DEFINE DEFINITION
+**************************************/
 
 #define TCP_MSGBUFF_SIZE 10000
 #define TCP_READ_SIZE 100
@@ -26,8 +26,8 @@
 
 
 /**************************************
- * STRUCTURE DEFINITION
- *************************************/
+** STRUCTURE DEFINITION
+**************************************/
 
 typedef struct message_s
 {
@@ -37,8 +37,8 @@ typedef struct message_s
 } message_t;
 
 /**************************************
- * FUNCTION DEFINITION
- *************************************/
+** FUNCTION DEFINITION
+**************************************/
 
 /* MESSAGE*/
 message_t *tcp_new_message(void);
