@@ -32,23 +32,23 @@ static bool is_file_on_server(client_t *client, char *file)
 {
     char real_path[PATH_MAX];
     bzero(real_path, PATH_MAX);
+    struct stat info;
+    int fd = -1;
     if (file[0] != '/') {
         strcpy(real_path, client->cur_dir);
         if (real_path[strlen(real_path) - 1] != '/')
             real_path[strlen(real_path)] = '/';
         strcat(real_path, file);
-    } else {
+    } else
         strcpy(real_path, file);
-    }
-    if (access(real_path, F_OK) != -1) {
-        struct stat info;
-        if (stat(real_path, &info) == -1)
-            return (false);
-        if (S_ISDIR(info.st_mode))
-            return (false);
-        return (true);
-    }
-    return (false);
+    if ((fd = open(real_path, O_RDONLY)) == -1)
+        return false;
+    close(fd);
+    if (stat(real_path, &info) == -1)
+        return (false);
+    if (S_ISDIR(info.st_mode))
+        return (false);
+    return (true);
 }
 
 void retr(server_info_t *info, client_t *client, char **cmd)
