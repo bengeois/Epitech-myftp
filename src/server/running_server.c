@@ -12,9 +12,9 @@ int running_server(server_info_t *info)
     struct timeval timeout;
     while (!server_stop) {
         set_fd_set(info);
-        manage_timeout_select(&timeout);
+        manage_timeout_select(info, &timeout);
         if (select(FD_SETSIZE, &info->read_fd, &info->write_fd,
-        &info->except_fd, &timeout) == -1) {
+        &info->except_fd, (timeout.tv_usec == 0 ? NULL : &timeout)) == -1) {
             perror("[SERVER]");
             return (EXIT_FAILURE);
         }

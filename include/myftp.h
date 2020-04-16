@@ -131,7 +131,7 @@ int is_client_login(client_t *client);
 int start_server(server_info_t *info);
 void stop_server(int signal);
 int running_server(server_info_t *info);
-void manage_timeout_select(struct timeval *timeout);
+void manage_timeout_select(server_info_t *info, struct timeval *timeout);
 int handle_socket_activities(server_info_t *info);
 void quit_client(server_info_t *info);
 int handle_client_activities(server_info_t *info);
